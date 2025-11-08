@@ -3,9 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Proyecto Front_end D&M</title>
+    <link rel="stylesheet" href="css/main.css">
 </head>
+<h1>Galería de fotos</h1>
+<form id="">
+    <input type="text" id="" placeholder="Buscar imágenes..." required/>
+    <select id="orientation">
+        <option value="">Todas</option>
+        <option value="portait">Verticales</option>
+        <option value="landscape">Horizontales</option>
+    </select>
+    <button type="submit">Buscar</button>
+</form>
+<header>
+
+<main>
+    <section class="">
+        <button>Naturaleza</button>
+        <button>Tecnología</button>
+        <button>Personas</button>
+    </section>
+
+    <!--Galería de imágenes principal-->
+<section id="">
+    <figure>
+      <img src="imagen1.jpg" alt="" />
+      <figcaption>Imagen 1</figcaption>
+    </figure>
+    <figure>
+      <img src="imagen2.jpg" alt="" />
+      <figcaption>Imagen 2</figcaption>
+    </figure>
+       <figure>
+      <img src="imagen3.jpg" alt="" />
+      <figcaption>Imagen 3</figcaption>
+    </figure>
+       <figure>
+      <img src="imagen4.jpg" alt="" />
+      <figcaption>Imagen 4</figcaption>
+    </figure>
+       <figure>
+      <img src="imagen5.jpg" alt="" />
+      <figcaption>Imagen 5</figcaption>
+    </figure>
+
+
+</section>
+
+<div class="">
+    <!--Lo he hecho con <a href porque pide que la pagina nose recargue, con un boton se recarga-->
+    <a href="" class="boton">Anterior</a>
+    <a href="" class="boton">1</a>
+    <a href="" class="boton">2</a>
+    <a href="" class="boton">Siguiente</a>
+</div>
+</main>
+
+
+    <!-- Botón para abrir el modal -->
+<button onclick="document.getElementById('favModal').showModal()">Ver favoritos</button>
+
+<!-- Modal con etiqueta <dialog> he encontrado esta etiqueta para este tipo de ventanas, para esto si que he buscado con IA-->
+<dialog id="favModal">
+  <header>
+    <h2>Favoritos</h2>
+  </header>
+
+  <section class="">
+    <figure>
+      <img src="imagen1.jpg" alt="" />
+      <figcaption>Imagen 1</figcaption>
+    </figure>
+    <figure>
+      <img src="imagen2.jpg" alt="" />
+      <figcaption>Imagen 2</figcaption>
+    </figure>
+    <!-- Seguir añadiendo más imagenes -->
+  </section>
+
+  <footer>
+    <button onclick="document.getElementById('favModal').close()">Cerrar</button>
+    <!--Aquí solo meteríamos otro botón con la opción de eliminar y la de añadir tendría 
+    que ser en la parte de la galería, cada foto de la galería tendría que tener la opción de añadir-->
+  </footer>
+</dialog>
+
+</dialog>
 <body>
-    
+    <script src="js/main.js"></script>
 </body>
 </html>
