@@ -1,96 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto Front_end D&M</title>
-    <link rel="stylesheet" href="css/main.css">
-</head>
-<h1>Galería de fotos</h1>
-<form id="">
-    <input type="text" id="" placeholder="Buscar imágenes..." required/>
-    <select id="orientation">
-        <option value="">Todas</option>
-        <option value="portait">Verticales</option>
-        <option value="landscape">Horizontales</option>
-    </select>
-    <button type="submit">Buscar</button>
-</form>
-<header>
-
-<main>
-    <section class="">
-        <button>Naturaleza</button>
-        <button>Tecnología</button>
-        <button>Personas</button>
-    </section>
-
-    <!--Galería de imágenes principal-->
-<section id="">
-    <figure>
-      <img src="imagen1.jpg" alt="" />
-      <figcaption>Imagen 1</figcaption>
-    </figure>
-    <figure>
-      <img src="imagen2.jpg" alt="" />
-      <figcaption>Imagen 2</figcaption>
-    </figure>
-       <figure>
-      <img src="imagen3.jpg" alt="" />
-      <figcaption>Imagen 3</figcaption>
-    </figure>
-       <figure>
-      <img src="imagen4.jpg" alt="" />
-      <figcaption>Imagen 4</figcaption>
-    </figure>
-       <figure>
-      <img src="imagen5.jpg" alt="" />
-      <figcaption>Imagen 5</figcaption>
-    </figure>
-
-
-</section>
-
-<div class="">
-    <!--Lo he hecho con <a href porque pide que la pagina nose recargue, con un boton se recarga-->
-    <a href="" class="boton">Anterior</a>
-    <a href="" class="boton">1</a>
-    <a href="" class="boton">2</a>
-    <a href="" class="boton">Siguiente</a>
-</div>
-</main>
-
-
-    <!-- Botón para abrir el modal -->
-<button onclick="document.getElementById('favModal').showModal()">Ver favoritos</button>
-
-<!-- Modal con etiqueta <dialog> he encontrado esta etiqueta para este tipo de ventanas, para esto si que he buscado con IA-->
-<dialog id="favModal">
-  <header>
-    <h2>Favoritos</h2>
-  </header>
-
-  <section class="">
-    <figure>
-      <img src="imagen1.jpg" alt="" />
-      <figcaption>Imagen 1</figcaption>
-    </figure>
-    <figure>
-      <img src="imagen2.jpg" alt="" />
-      <figcaption>Imagen 2</figcaption>
-    </figure>
-    <!-- Seguir añadiendo más imagenes -->
-  </section>
-
-  <footer>
-    <button onclick="document.getElementById('favModal').close()">Cerrar</button>
-    <!--Aquí solo meteríamos otro botón con la opción de eliminar y la de añadir tendría 
-    que ser en la parte de la galería, cada foto de la galería tendría que tener la opción de añadir-->
-  </footer>
-</dialog>
-
-</dialog>
-<body>
-    <script src="js/main.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Proyecto Front_End D&M</title>
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <header class="cabecera">
+            <div class="logo">
+                <img src="" alt="">
+            </div>
+            <h1>Titulo Pagina</h1>
+            <nav class="menu">            
+                <form id="" class="izquierda">    
+                    <input type="text" id="" placeholder="Buscar    imágenes..." required/>
+                    <button class="" type="submit">Buscar</button>
+                </form>
+                <div class="derdecha">
+                        <button>Naturaleza</button>
+                        <button>Tecnología</button>
+                        <button>Personas</button>
+                        <button>favoritos</button>
+                </div>                
+            </nav>
+        </header>
+        <main class="contenedor">
+            <div>
+                <select id="orientation">
+                    <option value="">Todas</option>
+                    <option value="portait">Verticales</option>
+                    <option value="landscape">Horizontales</option>
+                </select>
+            </div>
+            <!--Galería de imágenes principal-->    
+            <section id="contenido">
+                    <article>
+                        <h2>Imagen 01</h2>
+                        <div>
+                            <h3>Titulo 01</h3>
+                            <img src="assets\viajes\viajes-1.jpg" alt="" />
+                            <p>By jesus zecua</p>
+                            <button>Añadir a favoritos</button>
+                        </div>
+                    </article>
+                    <article>
+                        <h2>Imagen 02</h2>
+                        <div>
+                            <h3>Titulo 02</h3>
+                            <img src="assets\viajes\viajes-2.jpg" alt="" />
+                            <p>By jesus zecua</p>
+                            <button>Añadir a favoritos</button>
+                        </div>
+                    </article>
+                    <article>
+                        <h2>Imagen 03</h2>
+                        <div>
+                            <h3>Titulo 03</h3>
+                            <img src="assets\viajes\viajes-3.jpg" alt="" />
+                            <p>By jesus zecua</p>
+                            <button>Añadir a favoritos</button>
+                        </div>
+                    </article>
+                    <article>
+                        <h2>Imagen 04</h2>
+                        <div>
+                            <h3>Titulo 04</h3>
+                            <img src="assets\viajes\viajes-4.jpg" alt="" />
+                            <p>By jesus zecua</p>
+                            <button>Añadir a favoritos</button>
+                        </div>
+                    </article>
+                    <article>
+                        <h2>Imagen 05</h2>
+                        <div>
+                            <h3>Titulo 05</h3>
+                            <img src="assets\viajes\viajes-5.jpg" alt="" />
+                            <p>By jesus zecua</p>
+                            <button>Añadir a favoritos</button>
+                        </div>
+                    </article>
+                    <article>
+                        <h2>Imagen 06</h2>
+                        <div>
+                            <h3>Titulo 06</h3>
+                            <img src="assets\viajes\viajes-6ñ´kl.jpg" alt="" />
+                            <p>By jesus zecua</p>          
+                            <button>Añadir a favoritos</button>
+                        </div>
+                    </article>
+                    <div class="menu">
+                        <ul>
+                            <li><a href="" class="boton1">Anterior</a></li>
+                            <li><a href="" class="boton2">siguiente</a></li>
+                        </ul>
+                    </div>
+            </section> 
+        </main>   
+        <footer class="pie">
+            <div>
+                <h3>Pie de pagina</h3>
+            </div>
+        </footer>        
+        <script src="js/main.js"></script>
+    </body>
 </html>
