@@ -4,7 +4,11 @@
     - separacion de responsabilidades */
 
 
+
+
+
 /* VARIABLES */
+
 
 
 /* capturar elementos DOM */
