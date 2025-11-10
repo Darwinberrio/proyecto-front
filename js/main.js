@@ -5,6 +5,13 @@
 
 
 /* VARIABLES */
+const claveApi="KMDb7NM7edekXPlf2hLfhNSpsRtoXls5xEFzaWgjkMVUufY8ifnopuwJ";
+const baseUrl="https://www.pexels.com/es-es/api";
+const galeria=;
+const btnBusqueda=;
+const inputBusqueda=;
+const orientacion=;
+const favoritos=;
 
 const connect = async (url) => {
     try{
@@ -29,6 +36,10 @@ const connect = async (url) => {
 
 
 /* FUNCIONES */
+cargarImagenes=()=>{
+
+};
+
 
 
 /* INVOCACIÓN A LAS FUNCIONES */

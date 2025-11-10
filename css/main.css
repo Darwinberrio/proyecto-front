@@ -15,6 +15,7 @@ img {
     background-color:  rgba(3, 4, 7, 0.849);
     color: white;
     font-size: 1rem; 
+    
 }
 
 .menu{
@@ -24,6 +25,7 @@ img {
     justify-content: space-between;
 }
 
+
 .izquierda{
     align-items: center;
     width: max-content;
@@ -32,6 +34,7 @@ img {
 .derecha{
     align-items: flex-end;
     width: max-content;
+   
 }
 
 button {
