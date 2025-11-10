@@ -7,15 +7,69 @@
 /* VARIABLES */
 
 
+document.addEventListener('DOMContentLoaded', () => {
+
 const urlBase="https://api.pexels.com/v1";
-const claveApi="KMDb7NM7edekXPlf2hLfhNSpsRtoXls5xEFzaWgjkMVUufY8ifnopuwJ";
+const claveApi="W6bGyAKdM2oDJPWwjDvbweupPSHBJnELkAotZ94sbeBn97yM5hojILQc";
 // const claveApidarwin="W6bGyAKdM2oDJPWwjDvbweupPSHBJnELkAotZ94sbeBn97yM5hojILQc";
 
-const connect = async () => {
+const naturecat='search?query=nature';
+const peoplecat='search?query=people';
+const techcat='search?query=technology';
+
+
+/* capturar elementos DOM */
+
+/* Acceder al elemento del DOM para crear añadir los options */
+
+// const inputBusqueda= document.querySelector('.menu>form>input');
+const btnBusqueda= document.querySelector('.menu>form>button');
+
+const orientacion= document.querySelector('#contenedor>div>select');
+
+const btnfavoritos= document.querySelector('#contenido>artticlediv>button');    
+
+//https://api.pexels.com/v1/search?query=melon&per_page=1
+
+
+/* EVENTOS */
+
+/* document.addEventListener('click', (ev) => {
+         ev.preventDefault();
+    if (ev.target.matches('.buscar')) {
+         const buscar= ev.target.id;
+        console.log(buscar);    
+    
+    }
+}) */
+
+ document.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+    if (ev.target.matches('.buscar')) {
+        //capturar el valor del imput
+        const buscar= ev.target.name;
+        console.log(buscar);    
+    }
+})
+
+document.addEventListener('change', (ev) => {
+    // ev.preventDefault();
+    if (ev.target.matches('.btn')) {
+        
+    
+    }
+})
+
+/* FUNCIONES */
+
+
+const connect = async (url) => {
+    
+    // console.log(`${urlBase}/${url}`)
     try{
-        const resp= await fetch(`${urlBase}`,{
+        const resp= await fetch(`${urlBase}/${url}`,{
             method:'GET',
-            Headers:{
+            headers:{
                 'Authorization': claveApi
             }
         })
@@ -29,145 +83,24 @@ const connect = async () => {
     } catch (error) {
         throw (error + ' tenemos que gestionar este errror')
     }
-}
+};
 
-/* capturar elementos DOM */
 
-/* Acceder al elemento del DOM para crear añadir los options */
-
-// const inputBusqueda= document.querySelector('.menu>form>input');
-const btnBusqueda= document.querySelector('.menu>form>button');
-
-const orientacion= document.querySelector('#contenedor>div>select');
-
-const btnfavoritos= document.querySelector('#contenido>artticlediv>button');
-
-/* EVENTOS */
-
-document.addEventListener('click', (ev) => {
-    // ev.preventDefault();
-    if (ev.target.matches('.btn')) {
-        
-    
-    }
-})
-
-/* FUNCIONES */
-
-async function nature() {
+const pintarMiniaturas=async()=> {
      try {
-        const resp=await fetch ('https://api.pexels.com/v1/search?query=nature');
-        const data=resp.json();
-       
-        if (resp.ok){
-            return data}
+        const data=await connect('search?query=naturaleza&per_page=10');
+        // console.log(data);
+            
+    
     } 
     catch(error) {
             console.log('error', error)
     }
-       console.log (data) 
     
 }
-    
- 
-
-/* async function buscador(){
-    try{
-        const resp= await connect('#photos-search');
-        const data = resp.json();
-        if (resp.ok){
-            return 
-        }
-
-    }
-} */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Utilidades de LocalStorage
-const LS_KEY = 'favorites_v1';
-
-function favoritos() {
-  try {
-    return JSON.parse(localStorage.getItem(LS_KEY)) || [];
-  } catch {
-    return [];
-  }
-}
-
-function guardarFavoritos(list) {
-  localStorage.setItem(LS_KEY, JSON.stringify(list));
-  updateFavoritesCount();
-}
-
-function favorito(id) {
-  return favoritos().some(p => p.id === id);
-}
-
-function añadirFavorito(photo) {
-  const favs = favoritos();
-  if (!favs.some(p => p.id === photo.id)) {
-    favs.push({ ...photo, savedAt: new Date().toISOString() });
-    guardarFavoritos(favs);
-  }
-}
-
-function borrarfavorito(id) {
-  const favs = loadFavorites().filter(p => p.id !== id);
-  guardarFavoritos(favs);
-}
-
-function actualizarFavorito() {
-  el.favCount.textContent = String(favoritos().length);
-}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* INVOCACIÓN A LAS FUNCIONES */
+pintarMiniaturas()
+
+})
