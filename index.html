@@ -13,21 +13,21 @@
             </div>
             <h1>Titulo Pagina</h1>
             <nav class="menu">            
-                <form id="" class="izquierda">    
-                    <input type="text" id="" placeholder="Buscar    imágenes..." required/>
-                    <button class="" type="submit">Buscar</button>
+                <form id="formu" class="buscar">    
+                    <input id="busqueda" type="text"  placeholder="Buscar" required/>
+                    <button type="submit">Buscar</button>
                 </form>
-                <div class="derdecha">
+                <div class="derecha">
                         <button>Naturaleza</button>
                         <button>Tecnología</button>
                         <button>Personas</button>
-                        <button>favoritos</button>
+                        <button><a id="muestrafavoritos" href="favoritos.html">favoritos</a></button>
                 </div>                
             </nav>
         </header>
         <main class="contenedor">
             <div>
-                <select id="orientation">
+                <select id="listaopciones">
                     <option value="">Todas</option>
                     <option value="portait">Verticales</option>
                     <option value="landscape">Horizontales</option>
@@ -84,7 +84,7 @@
                         <h2>Imagen 06</h2>
                         <div>
                             <h3>Titulo 06</h3>
-                            <img src="assets\viajes\viajes-6ñ´kl.jpg" alt="" />
+                            <img src="assets\viajes\viajes-6.jpg" alt="" />
                             <p>By jesus zecua</p>          
                             <button>Añadir a favoritos</button>
                         </div>
