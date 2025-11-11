@@ -10,7 +10,7 @@
 //document.addEventListener('DOMContentLoaded', () => {
     /* capturar elementos DOM */
 
-const form= document.querySelector('#formu');
+const form= document.querySelector('#form');
 const input = document.querySelector('#busqueda');
 const orientacion= document.querySelector('#listaopciones');
 const muestrafavoritos= document.querySelector('#muestrafavoritos');
@@ -111,22 +111,22 @@ const validarpalabra = (palabra) =>   {
 
     if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(palabra)) {
            console.log("palabra admitida", palabra)
-    }
-            
+    }            
 }
 
-const pintarCategoriasIniciales= () =>{
-
-    arrayCategorias.forEach(obj => {
-
-        const data= connect(`photos/${obj.id}`)        
-
+const pintarCategoriasIniciales = () =>{  
+        
+      /*   for (const obj of arrayCategorias) {
+        const data = await connect(`photos/${obj.id}`);  */     
+        arrayCategorias.forEach(obj => {
+        const data= connect(`photos/${obj.id}`) 
         const card = document.createElement('article');
         const caja = document.createElement('div');    
         const imagen = document.createElement('img');    
         const btn = document.createElement('button');
 
         imagen.src = obj.id;
+        imagen.alt = obj.categoria
         btn.textContent = obj.categoria ; 
         btn.id = obj.categoria ;
 
@@ -138,7 +138,6 @@ const pintarCategoriasIniciales= () =>{
         fragment.append(card);
     });
     catInicio.append(fragment)
-
 };
 
 // const async obtenerDatos = () =>{
@@ -154,9 +153,10 @@ const pintarCategoriasIniciales= () =>{
 
 const pintarMiniaturas=async()=> {
      try {
-        console.log(`pintarMiniaturas`)
-        const data=await connect(`search?query=${consulta}&per_page=10&page=${page}&orientation=${orientation}`);
-         console.log(data);
+        // console.log(`pintarMiniaturas`)
+        const data = await connect(`search?query=${consulta}&per_page=10&page=${page}&orientation=${orientation}`);
+              
+        
     } 
     catch(error) {
             console.log('error', error)
@@ -169,7 +169,10 @@ const pintarMiniaturas=async()=> {
 
 const init=()=>{
     pintarCategoriasIniciales()
+    
 }
 init()
+pintarMiniaturas()
+
 
 //})
