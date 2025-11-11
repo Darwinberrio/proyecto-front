@@ -115,20 +115,26 @@ const validarpalabra = (palabra) =>   {
             
 }
 
-const pintarCategoriasIniciales=  () =>{
+const pintarCategoriasIniciales= () =>{
 
     arrayCategorias.forEach(obj => {
 
-        const data=connect(`photos/${obj.id}`)
-        
+        const data= connect(`photos/${obj.id}`)        
 
-        const card = document.createElement('article');    
-        const btn = document.createElement('BUTTON');        
-        btn.textContent ='Buscar';
+        const card = document.createElement('article');
+        const caja = document.createElement('div');    
+        const imagen = document.createElement('img');    
+        const btn = document.createElement('button');
+
+        imagen.src = obj.id;
+        btn.textContent = obj.categoria ; 
         btn.id = obj.categoria ;
+
         // btn.classList.add('tag');
 
-        card.append(btn)
+        caja.append(imagen)
+        card.append(caja,btn)
+        
         fragment.append(card);
     });
     catInicio.append(fragment)
