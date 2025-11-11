@@ -20,20 +20,18 @@ const techcat='search?query=technology';
 
 /* capturar elementos DOM */
 
-const formu= document.querySelector('#formu');
+const form= document.querySelector('#form');
 const input = document.querySelector('#busqueda');
 const orientacion= document.querySelector('#listaopciones');
-const muestrafavoritos= document.querySelector('#muestrafavoritos');    
+const muestrafavoritos= document.querySelector('#muestrafavoritos');
+const palabrabuscada = document.querySelector('#busqueda');  
 
 /* EVENTOS */
 //Evento que dispara la busqueda por la palabra introducida en el campo de búsqueda
-formu.addEventListener('submit', (ev) => {
+form.addEventListener('submit', (ev) => {
             ev.preventDefault(); 
-            const palabrabuscada = document.querySelector('#busqueda').value.trim();
-            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(palabrabuscada)) {
-                alert('Por favor, ingresa solo letras.');
-            return;
-  }console.log(palabrabuscada);
+            const palabra = palabrabuscada.value.trim(); 
+             validarpalabra(palabra);
 });
 
 //Evento que dispara el filtro para mostrar imagenes según su posición
@@ -79,6 +77,15 @@ const connect = async (url) => {
         throw (error + ' tenemos que gestionar este errror')
     }
 };
+
+
+const validarpalabra = (palabra) =>   {
+
+    if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(palabra)) {
+           console.log("palabra admitida", palabra)
+    }
+            
+}
 
 
 const pintarMiniaturas=async()=> {
