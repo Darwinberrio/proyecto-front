@@ -86,7 +86,7 @@ const validarpalabra = (palabra) =>   {
     }
             
 }
-
+  
 
 const pintarMiniaturas=async()=> {
      try {
