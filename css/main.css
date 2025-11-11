@@ -7,7 +7,16 @@
 }
 
 img {
-    width: 30%;
+    width: 100%;
+}
+.flexContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.flexContainer > *{
+    width: calc(33% - 20px);
 }
 
 .cabecera {
@@ -91,6 +100,10 @@ button:hover {
     .contenido>* {
         width: calc(50% - 20px);
     }
+    .flexContainer > *{
+        width: calc(33% - 20px);
+    }
+
 
     .menu{
         width: 90%;

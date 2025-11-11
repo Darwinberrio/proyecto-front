@@ -8,23 +8,45 @@
 
 
 //document.addEventListener('DOMContentLoaded', () => {
+    /* capturar elementos DOM */
+
+const form= document.querySelector('#formu');
+const input = document.querySelector('#busqueda');
+const orientacion= document.querySelector('#listaopciones');
+const muestrafavoritos= document.querySelector('#muestrafavoritos');
+const palabrabuscada = document.querySelector('#busqueda');  
+const catInicio = document.querySelector('#catInicio');  
+const Galeria = document.querySelector('#Galeria');  
 
 const urlBase="https://api.pexels.com/v1";
 const claveApi="W6bGyAKdM2oDJPWwjDvbweupPSHBJnELkAotZ94sbeBn97yM5hojILQc";
 // const claveApidarwin="W6bGyAKdM2oDJPWwjDvbweupPSHBJnELkAotZ94sbeBn97yM5hojILQc";
 
-const naturecat='search?query=nature';
-const peoplecat='search?query=people';
-const techcat='search?query=technology';
+let consulta;
+let page=3;
+let orientation=null;
+
+const fragment=document.createDocumentFragment()
+
+const arrayCategorias=[
+    {
+        id:34607914,
+        categoria:'nature'
+    },
+    {
+        id:356056,
+        categoria:'technology'
+    },
+    {
+        id:2014773,
+        categoria:'people'
+    }
+]
 
 
-/* capturar elementos DOM */
 
-const form= document.querySelector('#form');
-const input = document.querySelector('#busqueda');
-const orientacion= document.querySelector('#listaopciones');
-const muestrafavoritos= document.querySelector('#muestrafavoritos');
-const palabrabuscada = document.querySelector('#busqueda');  
+
+
 
 /* EVENTOS */
 //Evento que dispara la busqueda por la palabra introducida en el campo de búsqueda
@@ -47,8 +69,14 @@ orientacion.addEventListener('change', (ev) => {
     }
 });
 //Evento que muestra otra ventana con las imagenes marcadas como favoritos
-muestrafavoritos.addEventListener('click', (ev) => {
-   window.open('favoritos.html','_blank');   
+document.addEventListener('click', (ev) => {
+
+    if(ev.target.matches('#catInicio button')){
+        consulta=ev.target.id
+
+        pintarMiniaturas()
+    }
+   
 });
 
 //Evento para agregar favorito (tiene que guardarse en localstorage)
@@ -86,12 +114,43 @@ const validarpalabra = (palabra) =>   {
     }
             
 }
-  
+
+const pintarCategoriasIniciales=  () =>{
+
+    arrayCategorias.forEach(obj => {
+
+        const data=connect(`photos/${obj.id}`)
+        
+
+        const card = document.createElement('article');    
+        const btn = document.createElement('BUTTON');        
+        btn.textContent ='Buscar';
+        btn.id = obj.categoria ;
+        // btn.classList.add('tag');
+
+        card.append(btn)
+        fragment.append(card);
+    });
+    catInicio.append(fragment)
+
+};
+
+// const async obtenerDatos = () =>{
+//     try{
+//         const respuesta = await connect ('search?query=nature')
+//         console.log(respuesta);
+//     }catch{
+//             console.log('Error:', error);
+//     }
+// }
+
+// obtenerDatos();
 
 const pintarMiniaturas=async()=> {
      try {
-        const data=await connect('search?query=naturaleza&per_page=10');
-        // console.log(data);
+        console.log(`pintarMiniaturas`)
+        const data=await connect(`search?query=${consulta}&per_page=10&page=${page}&orientation=${orientation}`);
+         console.log(data);
     } 
     catch(error) {
             console.log('error', error)
@@ -101,6 +160,10 @@ const pintarMiniaturas=async()=> {
 
 
 /* INVOCACIÓN A LAS FUNCIONES */
-pintarMiniaturas()
+
+const init=()=>{
+    pintarCategoriasIniciales()
+}
+init()
 
 //})
