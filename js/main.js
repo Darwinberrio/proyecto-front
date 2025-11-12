@@ -12,7 +12,7 @@
 
 const form= document.querySelector('#form');
 const input = document.querySelector('#busqueda');
-const orientacion= document.querySelector('#listaopciones');
+const orientacion= document.querySelector('#orientacion');
 const muestrafavoritos= document.querySelector('#muestrafavoritos');
 const palabrabuscada = document.querySelector('#busqueda');  
 const catInicio = document.querySelector('#catInicio');  
@@ -24,7 +24,7 @@ const claveApi="W6bGyAKdM2oDJPWwjDvbweupPSHBJnELkAotZ94sbeBn97yM5hojILQc";
 
 let consulta;
 let page=3;
-let orientation=null;
+let orientation='square';
 
 const fragment=document.createDocumentFragment()
 
@@ -43,11 +43,6 @@ const arrayCategorias=[
     }
 ]
 
-
-
-
-
-
 /* EVENTOS */
 //Evento que dispara la busqueda por la palabra introducida en el campo de búsqueda
 form.addEventListener('submit', (ev) => {
@@ -61,21 +56,25 @@ orientacion.addEventListener('change', (ev) => {
     const posicion = ev.target.value;
     console.log ('Has seleccionado:', posicion);
     if (posicion==='Todas'){
-        console.log ('Mostrando todas las imagenes...');
+        pintarMiniaturas('Todas');
     }else if (posicion==='portait'){
-        console.log ('Mostrando las imágenes verticales...');
+        pintarMiniaturas('portait');
     }else{
-        console.log('Mostrando todas las imágenes horizontales...');
+        pintarMiniaturas('landscape');
     }
 });
-//Evento que muestra otra ventana con las imagenes marcadas como favoritos
+//Evento que muestra las categorias de inicio:
 document.addEventListener('click', (ev) => {
 
     if(ev.target.matches('#catInicio button')){
-        consulta=ev.target.id
-
-        pintarMiniaturas()
+        consulta=ev.target.id;
+        pintarMiniaturas();
     }
+    else if(ev.target.matches('#Galeria')){
+        consulta=ev.target.id;
+        pintarMiniaturas();
+    }
+    
    
 });
 
@@ -98,11 +97,11 @@ const connect = async (url) => {
             const data = await resp.json()
             return data
         }else {
-            throw ` este es el error`
+            throw (` este es el error`)
         }
 
     } catch (error) {
-        throw (error + ' tenemos que gestionar este errror')
+        throw (error + ' tenemos que gestionar este error')
     }
 };
 
@@ -119,7 +118,9 @@ const pintarCategoriasIniciales = () =>{
       /*   for (const obj of arrayCategorias) {
         const data = await connect(`photos/${obj.id}`);  */     
         arrayCategorias.forEach(obj => {
+
         const data= connect(`photos/${obj.id}`) 
+        const data= await connect(`photos/${obj.id}`);         
         const card = document.createElement('article');
         const caja = document.createElement('div');    
         const imagen = document.createElement('img');    
@@ -127,31 +128,18 @@ const pintarCategoriasIniciales = () =>{
 
         imagen.src = obj.id;
         imagen.alt = obj.categoria
+        imagen.src = data.src.small;
         btn.textContent = obj.categoria ; 
         btn.id = obj.categoria ;
-
-        // btn.classList.add('tag');
-
         caja.append(imagen)
-        card.append(caja,btn)
-        
+        card.append(caja,btn)       
         fragment.append(card);
     });
-    catInicio.append(fragment)
+                
+        catInicio.append(fragment)
 };
 
-// const async obtenerDatos = () =>{
-//     try{
-//         const respuesta = await connect ('search?query=nature')
-//         console.log(respuesta);
-//     }catch{
-//             console.log('Error:', error);
-//     }
-// }
-
-// obtenerDatos();
-
-const pintarMiniaturas=async()=> {
+/*const pintarMiniaturas=async()=> {
      try {
         // console.log(`pintarMiniaturas`)
         const data = await connect(`search?query=${consulta}&per_page=10&page=${page}&orientation=${orientation}`);
@@ -162,17 +150,48 @@ const pintarMiniaturas=async()=> {
             console.log('error', error)
     }
     
-};
+};*/
+const pintarMiniaturas=async(consulta, page, orientation)=> {
+    
+     try {
+        const data=await connect(`search?query=${consulta}&per_page=10&page=${page}&orientation=${orientation}`);
+        const card2 = document.createElement('article');
+        const caja2 = document.createElement('div');    
+        const imagen2 = document.createElement('img');    
+        const btn2 = document.createElement('button');
+        imagen2.src = data.src.small;
+        btn2.textContent = obj.categoria ; 
+        btn2.id = obj.categoria ;
+        caja2.append(imagen2)
+        card2.append(caja2,btn2)       
+        fragment.append(card2);
 
+        Galeria.append(fragment)
+        
+    } 
+    catch(error) {
+            (error)
+    }
+    
+};
 
 /* INVOCACIÓN A LAS FUNCIONES */
 
 const init=()=>{
     pintarCategoriasIniciales()
     
+    arrayCategorias.forEach(element => {
+        pintarCategoriasIniciales(element)
+    });
+    data.forEach(element=>{
+        pintarMiniaturas(consulta, page, orientation)
+    }
+
+    )
 }
 init()
 pintarMiniaturas()
 
 
 //})
+
