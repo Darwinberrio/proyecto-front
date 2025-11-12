@@ -108,19 +108,26 @@ const connect = async (url) => {
 
 const validarpalabra = (palabra) =>   {
 
-    if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(palabra)) {
-           console.log("palabra admitida", palabra)
-    }            
+    if(regex.test(palabra)){
+        return true   
+    }else{
+        console.log("La palabra introducida contiene valores numericos")        
+        return false
+    }
+    // if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(palabra)) {
+    //        console.log("palabra admitida", palabra)
+    // } 
+    
 }
 
 const pintarCategoriasIniciales = () =>{  
         
       /*   for (const obj of arrayCategorias) {
         const data = await connect(`photos/${obj.id}`);  */     
-        arrayCategorias.forEach(obj => {
+        // arrayCategorias.forEach(obj => {
 
-        const data= connect(`photos/${obj.id}`) 
-        const data= await connect(`photos/${obj.id}`);         
+        const data= connect(`photos/${obj.id}`);  
+               
         const card = document.createElement('article');
         const caja = document.createElement('div');    
         const imagen = document.createElement('img');    
@@ -183,11 +190,6 @@ const init=()=>{
     arrayCategorias.forEach(element => {
         pintarCategoriasIniciales(element)
     });
-    data.forEach(element=>{
-        pintarMiniaturas(consulta, page, orientation)
-    }
-
-    )
 }
 init()
 pintarMiniaturas()
