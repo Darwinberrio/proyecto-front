@@ -78,7 +78,7 @@ document.addEventListener('click', (ev) => {
     if(ev.target.matches('.addFavoritos')){
         const id=ev.target.id;
         addToFavorites(id)
-    }
+    }    
    
 });
 
@@ -117,7 +117,7 @@ const validarpalabra = (palabra)=>{
            console.log("palabra admitida", palabra)
            return(palabra)
     }else{
-        errorPalabra.textContent('la palabra no puede contener números')
+        errorPalabra.textContent('la palabra nonpuede contener números')
     }
             
 }
@@ -178,20 +178,9 @@ const pintarMiniaturas=async()=>{
     }
     
 };
-
 const addToFavorites=(id)=>{
     /*console.log(id)*/
 }
-
-const busqueda=(palabra)=>{
-    galeria.innerHTML="";
-    if (palabra==consulta){
-        pintarMiniaturas();
-    } 
-}
-
-
-
 /* INVOCACIÓN A LAS FUNCIONES */
 
 const init=()=>{
