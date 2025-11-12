@@ -10,14 +10,15 @@
 //document.addEventListener('DOMContentLoaded', () => {
     /* capturar elementos DOM */
 
-const form= document.querySelector('#formu');
+const form= document.querySelector('#form');
 const input = document.querySelector('#busqueda');
 const orientacion= document.querySelector('#orientacion');
-const muestrafavoritos= document.querySelector('#muestrafavoritos');
+const muestraFavoritos= document.querySelector('#muestrafavoritos');
 const palabrabuscada = document.querySelector('#busqueda');  
 const catInicio = document.querySelector('#catInicio');  
 const galeria = document.querySelector('#galeria');  
-const errorPalabra = document.querySelector('#errorPalabra');  
+const errorPalabra = document.querySelector('#errorPalabra');
+
 
 
 const urlBase="https://api.pexels.com/v1";
@@ -27,6 +28,7 @@ const claveApi="W6bGyAKdM2oDJPWwjDvbweupPSHBJnELkAotZ94sbeBn97yM5hojILQc";
 let consulta;
 let page=1;
 let orientation;
+let guardarFavorito;
 
 const fragment=document.createDocumentFragment()
 
@@ -73,14 +75,24 @@ document.addEventListener('click', (ev) => {
         pintarMiniaturas();
     }
 
+    if(ev.target.matches('#muestraFavoritos')){
+
+    }
+
     if(ev.target.matches('.addFavoritos')){
         const id=ev.target.id;
-        addToFavorites(id)
+        const objeto=arrayPexels.find((id)=>Object);
+        console.log(objeto)
+    
+       localStorage.setItem(id,JSON.stringify(id));
+         
     }    
    
 });
 
 //Evento para agregar favorito (tiene que guardarse en localstorage)
+
+
 
 /* FUNCIONES */
 
@@ -165,9 +177,8 @@ const pintarMiniaturas=async()=>{
              card.append(caja2,tituloAutor,btn2)       
              fragment.append(card)
         })
-        
+     
      ;
-
          galeria.append(fragment)
         
     } 
@@ -176,9 +187,19 @@ const pintarMiniaturas=async()=>{
     }
     
 };
-const addToFavorites=(id)=>{
-    console.log(id)
 
+const arrayPexels=async()=>{
+    try {
+        const data=await connect(`search?query=${consulta}&per_page=10&page=${page}&orientation=${orientation}`);
+        let array=data.photos;
+    } 
+    catch(error) {
+            (error)
+    }
+    console.log(arrayPexels)
+};
+const addToFavorites=(id)=>{
+        localStorage.setItem(id,JSON.stringify(id));
 }
 /* INVOCACIÓN A LAS FUNCIONES */
 
