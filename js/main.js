@@ -16,15 +16,17 @@ const orientacion= document.querySelector('#orientacion');
 const muestrafavoritos= document.querySelector('#muestrafavoritos');
 const palabrabuscada = document.querySelector('#busqueda');  
 const catInicio = document.querySelector('#catInicio');  
-const Galeria = document.querySelector('#Galeria');  
+const galeria = document.querySelector('#galeria');  
+const errorPalabra = document.querySelector('#errorPalabra');  
+
 
 const urlBase="https://api.pexels.com/v1";
 const claveApi="W6bGyAKdM2oDJPWwjDvbweupPSHBJnELkAotZ94sbeBn97yM5hojILQc";
 // const claveApidarwin="W6bGyAKdM2oDJPWwjDvbweupPSHBJnELkAotZ94sbeBn97yM5hojILQc";
 
 let consulta;
-let page=3;
-let orientation='square';
+let page=1;
+let orientation;
 
 const fragment=document.createDocumentFragment()
 
@@ -48,7 +50,9 @@ const arrayCategorias=[
 form.addEventListener('submit', (ev) => {
             ev.preventDefault(); 
             const palabra = palabrabuscada.value.trim(); 
-             validarpalabra(palabra);
+             //validarpalabra(palabra);
+             consulta=validarpalabra(palabra);
+             pintarMiniaturas();             
 });
 
 //Evento que dispara el filtro para mostrar imagenes según su posición
@@ -70,7 +74,11 @@ document.addEventListener('click', (ev) => {
         consulta=ev.target.id;
         pintarMiniaturas();
     }
-      
+
+    if(ev.target.matches('.addFavoritos')){
+        const id=ev.target.id;
+        addToFavorites(id)
+    }
    
 });
 
@@ -102,15 +110,20 @@ const connect = async (url) => {
 };
 
 
-const validarpalabra = (palabra) =>   {
+const validarpalabra = (palabra)=>{
+    const regEXP=/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/
 
-    if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(palabra)) {
+    if (regEXP.test(palabra)) {
            console.log("palabra admitida", palabra)
+           return(palabra)
+    }else{
+        errorPalabra.textContent('la palabra no puede contener números')
     }
             
 }
 
 const pintarCategoriasIniciales=async(obj) =>{
+    galeria.innerHTML="";
     try{
         const data= await connect(`photos/${obj.id}`);         
         const card = document.createElement('article');
@@ -122,42 +135,42 @@ const pintarCategoriasIniciales=async(obj) =>{
         btn.id = obj.categoria ;
         caja.append(imagen)
         card.append(caja,btn)       
-        fragment.append(card);
                 
-        catInicio.append(fragment)
+        catInicio.append(card)
 
     }catch (error){
-        (error)
+        console.log(error)
     }
 };
 
-/*const pintarMiniaturas=async()=> {
-     try {
-        console.log(`pintarMiniaturas`)
-        const data=await connect(`search?query=${consulta}&per_page=10&page=${page}&orientation=${orientation}`);
-         console.log(data);
-    } 
-    catch(error) {
-            console.log('error', error)
-    }
-    
-};*/
-const pintarMiniaturas=async()=> {
-    
-     try {
-        const data=await connect(`search?query=${consulta}&per_page=10&page=${page}&orientation=${orientation}`);
-        arrayFotos=data.photos;
-        console.log(arrayFotos);
-        const card2 = document.createElement('article');
-        const caja2 = document.createElement('div');    
-        const imagen2 = document.createElement('img');    
-        const btn2 = document.createElement('button');
-        imagen2.src = data.obj;
-         caja2.append(imagen2)
-        card2.append(caja2,btn2)       
-        fragment.append(card2);
 
-        Galeria.append(fragment)
+const pintarMiniaturas=async()=>{
+    galeria.innerHTML="";
+     try {
+        const data=await connect(`search?query=${consulta}&per_page=10&page=${page}&orientation=${orientation}`);
+        let arrayFotos=data.photos;
+        console.log(arrayFotos);
+        arrayFotos.forEach((obj)=>{
+             const card = document.createElement('article');
+             const caja2 = document.createElement('div');    
+             const imagen2 = document.createElement('img');    
+            imagen2.src = obj.src.small;
+            imagen2.alt = obj.alt;
+            const tituloAutor=document.createElement('H3')
+            tituloAutor.textContent=obj.photographer
+            const btn2 = document.createElement('button');
+            btn2.textContent='Añadir a favoritos';
+            btn2.id=obj.id;
+            btn2.classList.add('addFavoritos');
+            
+             caja2.append(imagen2)
+             card.append(caja2,tituloAutor,btn2)       
+             fragment.append(card)
+        })
+        
+     ;
+
+         galeria.append(fragment)
         
     } 
     catch(error) {
@@ -166,9 +179,18 @@ const pintarMiniaturas=async()=> {
     
 };
 
-/*arrayFotos.forEach(element => {
-    pintarMiniaturas(element)
-});*/
+const addToFavorites=(id)=>{
+    /*console.log(id)*/
+}
+
+const busqueda=(palabra)=>{
+    galeria.innerHTML="";
+    if (palabra==consulta){
+        pintarMiniaturas();
+    } 
+}
+
+
 
 /* INVOCACIÓN A LAS FUNCIONES */
 
