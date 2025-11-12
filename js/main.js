@@ -70,11 +70,7 @@ document.addEventListener('click', (ev) => {
         consulta=ev.target.id;
         pintarMiniaturas();
     }
-    else if(ev.target.matches('#Galeria')){
-        consulta=ev.target.id;
-        pintarMiniaturas();
-    }
-    
+      
    
 });
 
@@ -146,18 +142,18 @@ const pintarCategoriasIniciales=async(obj) =>{
     }
     
 };*/
-const pintarMiniaturas=async(consulta, page, orientation)=> {
+const pintarMiniaturas=async()=> {
     
      try {
         const data=await connect(`search?query=${consulta}&per_page=10&page=${page}&orientation=${orientation}`);
+        arrayFotos=data.photos;
+        console.log(arrayFotos);
         const card2 = document.createElement('article');
         const caja2 = document.createElement('div');    
         const imagen2 = document.createElement('img');    
         const btn2 = document.createElement('button');
-        imagen2.src = data.src.small;
-        btn2.textContent = obj.categoria ; 
-        btn2.id = obj.categoria ;
-        caja2.append(imagen2)
+        imagen2.src = data.obj;
+         caja2.append(imagen2)
         card2.append(caja2,btn2)       
         fragment.append(card2);
 
@@ -170,17 +166,17 @@ const pintarMiniaturas=async(consulta, page, orientation)=> {
     
 };
 
+/*arrayFotos.forEach(element => {
+    pintarMiniaturas(element)
+});*/
+
 /* INVOCACIÓN A LAS FUNCIONES */
 
 const init=()=>{
     arrayCategorias.forEach(element => {
         pintarCategoriasIniciales(element)
     });
-    data.forEach(element=>{
-        pintarMiniaturas(consulta, page, orientation)
-    }
-
-    )
+   
 }
 init()
 
