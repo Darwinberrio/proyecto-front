@@ -10,21 +10,23 @@
 //document.addEventListener('DOMContentLoaded', () => {
     /* capturar elementos DOM */
 
-const form= document.querySelector('#form');
+const form= document.querySelector('#formu');
 const input = document.querySelector('#busqueda');
 const orientacion= document.querySelector('#orientacion');
 const muestrafavoritos= document.querySelector('#muestrafavoritos');
 const palabrabuscada = document.querySelector('#busqueda');  
 const catInicio = document.querySelector('#catInicio');  
-const Galeria = document.querySelector('#Galeria');  
+const galeria = document.querySelector('#galeria');  
+const errorPalabra = document.querySelector('#errorPalabra');  
+
 
 const urlBase="https://api.pexels.com/v1";
 const claveApi="W6bGyAKdM2oDJPWwjDvbweupPSHBJnELkAotZ94sbeBn97yM5hojILQc";
 // const claveApidarwin="W6bGyAKdM2oDJPWwjDvbweupPSHBJnELkAotZ94sbeBn97yM5hojILQc";
 
 let consulta;
-let page=3;
-let orientation='square';
+let page=1;
+let orientation;
 
 const fragment=document.createDocumentFragment()
 
@@ -70,11 +72,12 @@ document.addEventListener('click', (ev) => {
         consulta=ev.target.id;
         pintarMiniaturas();
     }
-    else if(ev.target.matches('#Galeria')){
-        consulta=ev.target.id;
-        pintarMiniaturas();
+
+    if(ev.target.matches('.addFavoritos')){
+        const id=ev.target.id;
+        addToFavorites(id)
     }
-    
+      
    
 });
 
@@ -106,74 +109,66 @@ const connect = async (url) => {
 };
 
 
-const validarpalabra = (palabra) =>   {
+const validarpalabra = (palabra)=>{
+    const regEXP=/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/
 
-    if(regex.test(palabra)){
-        return true   
+    if (regEXP.test(palabra)) {
+           console.log("palabra admitida", palabra)
+           return(palabra)
     }else{
-        console.log("La palabra introducida contiene valores numericos")        
-        return false
+        errorPalabra.textContent('la palabra nonpuede contener números')
     }
-    // if (/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(palabra)) {
-    //        console.log("palabra admitida", palabra)
-    // } 
-    
+            
 }
 
-const pintarCategoriasIniciales = () =>{  
-        
-      /*   for (const obj of arrayCategorias) {
-        const data = await connect(`photos/${obj.id}`);  */     
-        // arrayCategorias.forEach(obj => {
-
-        const data= connect(`photos/${obj.id}`);  
-               
+const pintarCategoriasIniciales=async(obj) =>{
+    try{
+        const data= await connect(`photos/${obj.id}`);         
         const card = document.createElement('article');
         const caja = document.createElement('div');    
         const imagen = document.createElement('img');    
         const btn = document.createElement('button');
-
-        imagen.src = obj.id;
-        imagen.alt = obj.categoria
         imagen.src = data.src.small;
         btn.textContent = obj.categoria ; 
         btn.id = obj.categoria ;
         caja.append(imagen)
         card.append(caja,btn)       
-        fragment.append(card);
-    });
                 
-        catInicio.append(fragment)
+        catInicio.append(card)
+
+    }catch (error){
+        console.log(error)
+    }
 };
 
-/*const pintarMiniaturas=async()=> {
-     try {
-        // console.log(`pintarMiniaturas`)
-        const data = await connect(`search?query=${consulta}&per_page=10&page=${page}&orientation=${orientation}`);
-              
-        
-    } 
-    catch(error) {
-            console.log('error', error)
-    }
-    
-};*/
-const pintarMiniaturas=async(consulta, page, orientation)=> {
+
+const pintarMiniaturas=async()=>{
     
      try {
         const data=await connect(`search?query=${consulta}&per_page=10&page=${page}&orientation=${orientation}`);
-        const card2 = document.createElement('article');
-        const caja2 = document.createElement('div');    
-        const imagen2 = document.createElement('img');    
-        const btn2 = document.createElement('button');
-        imagen2.src = data.src.small;
-        btn2.textContent = obj.categoria ; 
-        btn2.id = obj.categoria ;
-        caja2.append(imagen2)
-        card2.append(caja2,btn2)       
-        fragment.append(card2);
+        let arrayFotos=data.photos;
+        console.log(arrayFotos);
+        arrayFotos.forEach((obj)=>{
+             const card = document.createElement('article');
+             const caja2 = document.createElement('div');    
+             const imagen2 = document.createElement('img');    
+            imagen2.src = obj.src.small;
+            imagen2.alt = obj.alt;
+            const tituloAutor=document.createElement('H3')
+            tituloAutor.textContent=obj.photographer
+            const btn2 = document.createElement('button');
+            btn2.textContent='Añadir a favoritos';
+            btn2.id=obj.id;
+            btn2.classList.add('addFavoritos');
+            
+             caja2.append(imagen2)
+             card.append(caja2,tituloAutor,btn2)       
+             fragment.append(card)
+        })
+        
+     ;
 
-        Galeria.append(fragment)
+         galeria.append(fragment)
         
     } 
     catch(error) {
@@ -182,18 +177,20 @@ const pintarMiniaturas=async(consulta, page, orientation)=> {
     
 };
 
+const addToFavorites=(id)=>{
+    console.log(id)
+    
+}
+
 /* INVOCACIÓN A LAS FUNCIONES */
 
 const init=()=>{
-    pintarCategoriasIniciales()
-    
     arrayCategorias.forEach(element => {
         pintarCategoriasIniciales(element)
     });
+   
 }
 init()
-pintarMiniaturas()
-
 
 //})
 
