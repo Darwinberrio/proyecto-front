@@ -57,16 +57,14 @@ form.addEventListener('submit', (ev) => {
 
 //Evento que dispara el filtro para mostrar imagenes según su posición
 orientacion.addEventListener('change', (ev) => {
-    const posicion = ev.target.value;
-    console.log ('Has seleccionado:', posicion);
-    if (posicion==='Todas'){
-        pintarMiniaturas('Todas');
-    }else if (posicion==='portait'){
-        pintarMiniaturas('portait');
-    }else{
-        pintarMiniaturas('landscape');
-    }
-});
+        const posicion = ev.target.value;
+        //console.log(posicion);
+        if (ev.target.matches('#orientacion'))
+            orientation=posicion;
+            pintarMiniaturas();
+        }
+        
+);
 //Evento que muestra las categorias de inicio:
 document.addEventListener('click', (ev) => {
 
@@ -179,7 +177,8 @@ const pintarMiniaturas=async()=>{
     
 };
 const addToFavorites=(id)=>{
-    /*console.log(id)*/
+    console.log(id)
+
 }
 /* INVOCACIÓN A LAS FUNCIONES */
 
