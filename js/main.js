@@ -22,8 +22,8 @@ const errorPalabra = document.querySelector('#errorPalabra');
 
 
 const urlBase="https://api.pexels.com/v1";
-const claveApi="W6bGyAKdM2oDJPWwjDvbweupPSHBJnELkAotZ94sbeBn97yM5hojILQc";
-// const claveApidarwin="W6bGyAKdM2oDJPWwjDvbweupPSHBJnELkAotZ94sbeBn97yM5hojILQc";
+const claveApi="KMDb7NM7edekXPlf2hLfhNSpsRtoXls5xEFzaWgjkMVUufY8ifnopuwJ";
+// claveApiDarwin ="W6bGyAKdM2oDJPWwjDvbweupPSHBJnELkAotZ94sbeBn97yM5hojILQc";
 
 let consulta;
 let page=1;
@@ -76,8 +76,8 @@ document.addEventListener('click', (ev) => {
     }
 
     if(ev.target.matches('#muestraFavoritos')){
-
-    }
+        window.location.href = "favoritos.html";
+  }
 
     if(ev.target.matches('.addFavoritos')){
         const id=ev.target.id;
@@ -89,9 +89,6 @@ document.addEventListener('click', (ev) => {
     }    
    
 });
-
-//Evento para agregar favorito (tiene que guardarse en localstorage)
-
 
 
 /* FUNCIONES */
@@ -127,7 +124,7 @@ const validarpalabra = (palabra)=>{
            console.log("palabra admitida", palabra)
            return(palabra)
     }else{
-        errorPalabra.textContent('la palabra nonpuede contener números')
+        errorPalabra.textContent('La palabra buscada no puede contener ni números ni símbolos')
     }
             
 }
@@ -159,7 +156,6 @@ const pintarMiniaturas=async()=>{
      try {
         const data=await connect(`search?query=${consulta}&per_page=10&page=${page}&orientation=${orientation}`);
         let arrayFotos=data.photos;
-        console.log(arrayFotos);
         arrayFotos.forEach((obj)=>{
              const card = document.createElement('article');
              const caja2 = document.createElement('div');    
@@ -172,6 +168,17 @@ const pintarMiniaturas=async()=>{
             btn2.textContent='Añadir a favoritos';
             btn2.id=obj.id;
             btn2.classList.add('addFavoritos');
+
+            btn2.addEventListener("click", () => {
+                addToFavorites({
+                    id: obj.id,
+                    src: obj.src.small,
+                    alt: obj.alt,
+                    photographer: obj.photographer
+                });
+                btn2.textContent = "Guardado";
+                setTimeout(() => btn2.textContent = "Añadir a favoritos", 2000);
+            });
             
              caja2.append(imagen2)
              card.append(caja2,tituloAutor,btn2)       
@@ -188,18 +195,15 @@ const pintarMiniaturas=async()=>{
     
 };
 
-const arrayPexels=async()=>{
-    try {
-        const data=await connect(`search?query=${consulta}&per_page=10&page=${page}&orientation=${orientation}`);
-        let array=data.photos;
-    } 
-    catch(error) {
-            (error)
+const addToFavorites=(obj)=>{
+    let favoritos = JSON.parse(localStorage.getItem("favoritos"))||[];
+    const existe = favoritos.find(fav => fav.id === obj.id);
+    if (!existe) {
+        favoritos.push(obj);
+        localStorage.setItem("favoritos", JSON.stringify(favoritos));
     }
-    console.log(arrayPexels)
-};
-const addToFavorites=(id)=>{
-        localStorage.setItem(id,JSON.stringify(id));
+
+        
 }
 /* INVOCACIÓN A LAS FUNCIONES */
 
@@ -212,4 +216,3 @@ const init=()=>{
 init()
 
 //})
-
